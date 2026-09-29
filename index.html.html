@@ -1,0 +1,3342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>My Cute Planner 🎀</title>
+
+<style>
+/* =========================================================
+   VERSION 10 — MY CUTE PLANNER
+========================================================= */
+
+:root{
+  --bg:#fff5fa;
+  --card:#ffffff;
+  --text:#5d4057;
+  --primary:#f49ac2;
+  --secondary:#ffd6e8;
+  --accent:#e979ad;
+  --shadow:rgba(200,120,160,.18);
+  --success:#7ed6a5;
+}
+
+*{
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  margin:0;
+  font-family:"Comic Sans MS",cursive;
+  background:var(--bg);
+  color:var(--text);
+  transition:
+    background .3s ease,
+    color .3s ease;
+  min-height:100vh;
+}
+
+body.lavender{
+  --bg:#f7f1ff;
+  --card:#ffffff;
+  --text:#59456d;
+  --primary:#b99bea;
+  --secondary:#e4d6ff;
+  --accent:#9874d6;
+  --shadow:rgba(130,100,190,.18);
+}
+
+body.darkpink{
+  --bg:#351f2d;
+  --card:#4a293d;
+  --text:#ffe7f2;
+  --primary:#e889b5;
+  --secondary:#633d52;
+  --accent:#ffadd2;
+  --shadow:rgba(0,0,0,.25);
+}
+
+body.darklavender{
+  --bg:#292238;
+  --card:#39304d;
+  --text:#eee4ff;
+  --primary:#aa8cdb;
+  --secondary:#514267;
+  --accent:#c4a9ff;
+  --shadow:rgba(0,0,0,.25);
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+header{
+  background:var(--card);
+  padding:25px 18px 20px;
+  text-align:center;
+  box-shadow:0 4px 18px var(--shadow);
+  position:relative;
+  z-index:10;
+}
+
+header h1{
+  margin:0;
+  color:var(--accent);
+  font-size:clamp(28px,5vw,42px);
+  text-shadow:0 2px 8px var(--shadow);
+}
+
+header p{
+  margin:8px 0 0;
+  font-size:16px;
+}
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+nav{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:8px;
+  padding:12px;
+  background:var(--secondary);
+  position:sticky;
+  top:0;
+  z-index:100;
+  box-shadow:0 3px 12px var(--shadow);
+}
+
+nav button{
+  border:none;
+  padding:10px 15px;
+  border-radius:22px;
+  background:var(--card);
+  color:var(--text);
+  cursor:pointer;
+  font-family:inherit;
+  font-weight:bold;
+  transition:
+    transform .2s ease,
+    background .2s ease,
+    color .2s ease,
+    box-shadow .2s ease;
+}
+
+nav button:hover{
+  transform:translateY(-3px);
+  background:var(--primary);
+  color:white;
+  box-shadow:0 5px 12px var(--shadow);
+}
+
+nav button:active{
+  transform:scale(.95);
+}
+
+/* =========================================================
+   PAGES
+========================================================= */
+
+.page{
+  display:none;
+  width:100%;
+  max-width:1050px;
+  margin:auto;
+  padding:30px 22px 50px;
+  animation:pageIn .35s ease;
+}
+
+.page.active{
+  display:block;
+}
+
+@keyframes pageIn{
+  from{
+    opacity:0;
+    transform:translateY(8px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+/* =========================================================
+   CARDS
+========================================================= */
+
+.card,
+.dashboard-card,
+.week-day{
+  background:var(--card);
+  border-radius:24px;
+  padding:22px;
+  margin-bottom:20px;
+  box-shadow:0 6px 22px var(--shadow);
+  transition:
+    transform .2s ease,
+    box-shadow .2s ease;
+}
+
+.dashboard-card:hover,
+.week-day:hover{
+  transform:translateY(-3px);
+  box-shadow:0 9px 28px var(--shadow);
+}
+
+.card h2{
+  margin-top:0;
+  color:var(--accent);
+}
+
+.card h3{
+  margin-bottom:8px;
+}
+
+/* =========================================================
+   DASHBOARD
+========================================================= */
+
+.dashboard-grid{
+  display:grid;
+  grid-template-columns:
+    repeat(auto-fit,minmax(220px,1fr));
+  gap:18px;
+}
+
+.big-number{
+  font-size:40px;
+  font-weight:bold;
+  color:var(--accent);
+}
+
+.mascot{
+  font-size:76px;
+  text-align:center;
+  animation:bounce 2.2s ease-in-out infinite;
+  user-select:none;
+}
+
+@keyframes bounce{
+  0%,100%{
+    transform:translateY(0) rotate(0deg);
+  }
+
+  50%{
+    transform:translateY(-9px) rotate(2deg);
+  }
+}
+
+.vibe{
+  text-align:center;
+  font-size:21px;
+  padding:20px;
+  border-radius:20px;
+  background:var(--secondary);
+  line-height:1.5;
+}
+
+/* =========================================================
+   INPUTS
+========================================================= */
+
+input,
+textarea,
+select{
+  width:100%;
+  padding:12px 14px;
+  border:2px solid var(--secondary);
+  border-radius:15px;
+  background:var(--card);
+  color:var(--text);
+  font-family:inherit;
+  margin:6px 0;
+  outline:none;
+  transition:
+    border .2s ease,
+    box-shadow .2s ease,
+    transform .2s ease;
+}
+
+input:focus,
+textarea:focus,
+select:focus{
+  border-color:var(--primary);
+  box-shadow:0 0 0 4px var(--secondary);
+}
+
+textarea{
+  min-height:110px;
+  resize:vertical;
+}
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.action{
+  border:none;
+  padding:10px 15px;
+  border-radius:20px;
+  background:var(--primary);
+  color:white;
+  cursor:pointer;
+  font-family:inherit;
+  font-weight:bold;
+  margin:4px;
+  transition:
+    transform .2s ease,
+    box-shadow .2s ease,
+    filter .2s ease;
+}
+
+.action:hover{
+  transform:translateY(-2px);
+  box-shadow:0 5px 12px var(--shadow);
+  filter:brightness(1.05);
+}
+
+.action:active{
+  transform:scale(.95);
+}
+
+/* =========================================================
+   PROGRESS
+========================================================= */
+
+.progress{
+  height:16px;
+  background:var(--secondary);
+  border-radius:20px;
+  overflow:hidden;
+  margin:12px 0;
+}
+
+.progress-bar{
+  height:100%;
+  width:0;
+  background:var(--primary);
+  border-radius:20px;
+  transition:width .5s ease;
+}
+
+/* =========================================================
+   TASKS
+========================================================= */
+
+.task{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin:10px 0;
+  padding:13px;
+  border-radius:17px;
+  background:var(--secondary);
+  flex-wrap:wrap;
+  transition:
+    transform .2s ease,
+    opacity .2s ease;
+}
+
+.task:hover{
+  transform:translateX(2px);
+}
+
+.task.completed{
+  opacity:.55;
+}
+
+.task.completed .task-name{
+  text-decoration:line-through;
+}
+
+.task-info{
+  flex:1;
+  min-width:180px;
+}
+
+.task-name{
+  font-weight:bold;
+  word-break:break-word;
+}
+
+.task-meta{
+  font-size:13px;
+  opacity:.75;
+  margin-top:4px;
+}
+
+.task input[type="checkbox"]{
+  width:20px;
+  height:20px;
+  accent-color:var(--accent);
+  margin:0 4px 0 0;
+}
+
+.priority-high{
+  border-left:7px solid #ff6f91;
+}
+
+.priority-medium{
+  border-left:7px solid #ffc75f;
+}
+
+.priority-low{
+  border-left:7px solid #7ed6a5;
+}
+
+.category-filter{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin:10px 0 15px;
+}
+
+.category-filter button{
+  border:none;
+  padding:8px 13px;
+  border-radius:18px;
+  background:var(--secondary);
+  color:var(--text);
+  cursor:pointer;
+  font-family:inherit;
+  transition:.2s;
+}
+
+.category-filter button:hover{
+  background:var(--primary);
+  color:white;
+  transform:translateY(-2px);
+}
+
+/* =========================================================
+   WEEK
+========================================================= */
+
+.week-grid{
+  display:grid;
+  grid-template-columns:
+    repeat(auto-fit,minmax(220px,1fr));
+  gap:15px;
+}
+
+.week-day h3{
+  color:var(--accent);
+}
+
+.week-day .task{
+  font-size:14px;
+}
+
+/* =========================================================
+   TIMER
+========================================================= */
+
+.timer{
+  text-align:center;
+  font-size:clamp(42px,10vw,65px);
+  color:var(--accent);
+  font-weight:bold;
+  letter-spacing:2px;
+  padding:8px;
+}
+
+/* =========================================================
+   ACHIEVEMENTS
+========================================================= */
+
+.achievement{
+  padding:16px;
+  background:var(--secondary);
+  border-radius:18px;
+  margin:10px 0;
+  transition:.2s;
+}
+
+.achievement:hover{
+  transform:translateX(3px);
+}
+
+.achievement.locked{
+  opacity:.45;
+}
+
+/* =========================================================
+   CALENDAR
+========================================================= */
+
+.calendar{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  gap:6px;
+}
+
+.calendar div{
+  min-height:42px;
+  padding:10px 5px;
+  text-align:center;
+  border-radius:11px;
+  background:var(--card);
+  transition:.2s;
+}
+
+.calendar div:hover{
+  background:var(--secondary);
+  transform:scale(1.03);
+}
+
+.calendar .today{
+  background:var(--primary);
+  color:white;
+  font-weight:bold;
+}
+
+.calendar .active-day{
+  border:3px solid var(--accent);
+}
+
+/* =========================================================
+   QUICK BUTTONS
+========================================================= */
+
+.quick-buttons{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+}
+
+.quick-buttons button{
+  flex:1;
+  min-width:140px;
+}
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+#toast{
+  position:fixed;
+  bottom:25px;
+  right:25px;
+  max-width:calc(100vw - 50px);
+  background:var(--accent);
+  color:white;
+  padding:14px 20px;
+  border-radius:20px;
+  display:none;
+  z-index:9999;
+  box-shadow:0 6px 20px rgba(0,0,0,.2);
+  animation:toastIn .25s ease;
+}
+
+@keyframes toastIn{
+  from{
+    opacity:0;
+    transform:translateY(15px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+/* =========================================================
+   VICTORY
+========================================================= */
+
+#victory{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.5);
+  align-items:center;
+  justify-content:center;
+  z-index:10000;
+  padding:20px;
+}
+
+.victory-box{
+  background:var(--card);
+  color:var(--text);
+  padding:40px;
+  border-radius:30px;
+  text-align:center;
+  width:min(500px,100%);
+  box-shadow:0 15px 50px rgba(0,0,0,.25);
+  animation:popIn .4s ease;
+}
+
+.victory-box h1{
+  color:var(--accent);
+}
+
+@keyframes popIn{
+  from{
+    transform:scale(.8);
+    opacity:0;
+  }
+  to{
+    transform:scale(1);
+    opacity:1;
+  }
+}
+
+/* =========================================================
+   CONFETTI
+========================================================= */
+
+.confetti{
+  position:fixed;
+  top:-10px;
+  width:10px;
+  height:15px;
+  animation:fall 3s linear forwards;
+  z-index:10001;
+  border-radius:3px;
+}
+
+@keyframes fall{
+  to{
+    transform:
+      translateY(110vh)
+      rotate(720deg);
+  }
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer{
+  text-align:center;
+  padding:20px;
+  opacity:.65;
+  font-size:13px;
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:700px){
+
+  header{
+    padding:20px 12px;
+  }
+
+  header h1{
+    font-size:30px;
+  }
+
+  header p{
+    font-size:14px;
+  }
+
+  nav{
+    gap:6px;
+    padding:9px 6px;
+  }
+
+  nav button{
+    font-size:12px;
+    padding:8px 10px;
+  }
+
+  .page{
+    padding:20px 12px 40px;
+  }
+
+  .card,
+  .dashboard-card,
+  .week-day{
+    padding:17px;
+    border-radius:20px;
+  }
+
+  .dashboard-grid{
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+  }
+
+  .big-number{
+    font-size:32px;
+  }
+
+  .mascot{
+    font-size:65px;
+  }
+
+  .vibe{
+    font-size:18px;
+    padding:16px;
+  }
+
+  .task{
+    padding:11px;
+  }
+
+  .task-info{
+    min-width:calc(100% - 40px);
+  }
+
+  .task .action{
+    padding:8px 10px;
+    margin:2px;
+  }
+
+  .quick-buttons{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+  }
+
+  .quick-buttons button{
+    min-width:0;
+  }
+
+  .calendar{
+    gap:3px;
+  }
+
+  .calendar div{
+    min-height:38px;
+    padding:8px 2px;
+    font-size:13px;
+  }
+
+  .victory-box{
+    padding:28px 18px;
+  }
+
+  #toast{
+    right:15px;
+    bottom:15px;
+    left:15px;
+    max-width:none;
+    text-align:center;
+  }
+}
+
+/* =========================================================
+   EXTRA SMALL PHONES
+========================================================= */
+
+@media(max-width:420px){
+
+  .dashboard-grid{
+    grid-template-columns:1fr;
+  }
+
+  .quick-buttons{
+    grid-template-columns:1fr;
+  }
+
+  nav button{
+    font-size:11px;
+    padding:7px 8px;
+  }
+
+  .calendar div{
+    font-size:11px;
+  }
+
+  .task .action{
+    font-size:12px;
+  }
+}
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media(prefers-reduced-motion:reduce){
+
+  *,
+  *::before,
+  *::after{
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+    scroll-behavior:auto !important;
+    transition-duration:.01ms !important;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>🎀 My Cute Planner 🎀</h1>
+  <p id="headerMessage">
+    Welcome back! Let's make today amazing! 🌷
+  </p>
+</header>
+
+<nav>
+  <button onclick="showPage('home')">🏠 Home</button>
+  <button onclick="showPage('today')">🌷 Today</button>
+  <button onclick="showPage('week')">📅 This Week</button>
+  <button onclick="showPage('goals')">🎯 Goals</button>
+  <button onclick="showPage('habits')">🌱 Habits</button>
+  <button onclick="showPage('stats')">📊 Stats</button>
+  <button onclick="showPage('calendar')">🗓️ Calendar</button>
+  <button onclick="showPage('customize')">⚙️ Customize</button>
+</nav>
+
+
+<!-- =======================================================
+     HOME
+======================================================= -->
+
+<section id="home" class="page active">
+
+  <div class="card">
+
+    <h2 id="greeting">Good day! 🌷</h2>
+
+    <div class="mascot" id="homeMascot">🐰</div>
+
+    <div class="vibe" id="homeVibe">
+      Let's make today amazing! ✨
+    </div>
+
+  </div>
+
+  <div class="dashboard-grid">
+
+    <div class="dashboard-card">
+      <h3>🌷 Today's Progress</h3>
+
+      <div class="big-number" id="homeTaskProgress">
+        0%
+      </div>
+
+      <div class="progress">
+        <div
+          class="progress-bar"
+          id="homeProgressBar">
+        </div>
+      </div>
+
+      <p id="homeTaskText">
+        0 / 0 tasks completed
+      </p>
+    </div>
+
+
+    <div class="dashboard-card">
+
+      <h3>🔥 Streak</h3>
+
+      <div
+        class="big-number"
+        id="homeStreak">
+        0
+      </div>
+
+      <p>day streak</p>
+
+      <p id="homeBestStreak">
+        Best: 0 days
+      </p>
+
+    </div>
+
+
+    <div class="dashboard-card">
+
+      <h3>⏰ Pomodoro</h3>
+
+      <div
+        class="big-number"
+        id="homePomodoros">
+        0
+      </div>
+
+      <p>focus sessions</p>
+
+    </div>
+
+
+    <div class="dashboard-card">
+
+      <h3>🎯 Goals</h3>
+
+      <div
+        class="big-number"
+        id="homeGoals">
+        0
+      </div>
+
+      <p>goals completed</p>
+
+    </div>
+
+  </div>
+
+
+  <div class="card">
+
+    <h2>⚡ Quick Actions</h2>
+
+    <div class="quick-buttons">
+
+      <button
+        class="action"
+        onclick="showPage('today')">
+        🌷 Today's Tasks
+      </button>
+
+      <button
+        class="action"
+        onclick="showPage('week')">
+        📅 Weekly Planner
+      </button>
+
+      <button
+        class="action"
+        onclick="showPage('goals')">
+        🎯 Goals
+      </button>
+
+      <button
+        class="action"
+        onclick="showPage('habits')">
+        🌱 Habits
+      </button>
+
+      <button
+        class="action"
+        onclick="showPage('stats')">
+        📊 Stats
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <div class="card">
+
+    <h2>💭 Today's Reminder</h2>
+
+    <div
+      class="vibe"
+      id="dashboardMessage">
+      One little step at a time. 💕
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =======================================================
+     TODAY
+======================================================= -->
+
+<section id="today" class="page">
+
+  <div class="card">
+
+    <h2>🌷 Today's Tasks</h2>
+
+    <input
+      id="taskInput"
+      placeholder="What do you need to do?"
+      onkeydown="if(event.key==='Enter') addTask()"
+    >
+
+    <select id="taskPriority">
+
+      <option value="low">
+        🌱 Low Priority
+      </option>
+
+      <option
+        value="medium"
+        selected>
+        ⭐ Medium Priority
+      </option>
+
+      <option value="high">
+        🔥 High Priority
+      </option>
+
+    </select>
+
+
+    <select id="taskCategory">
+
+      <option value="Study">
+        📚 Study
+      </option>
+
+      <option value="Personal">
+        🌷 Personal
+      </option>
+
+      <option value="Work">
+        💼 Work
+      </option>
+
+      <option value="Health">
+        🌱 Health
+      </option>
+
+      <option value="Other">
+        ✨ Other
+      </option>
+
+    </select>
+
+
+    <button
+      class="action"
+      onclick="addTask()">
+      Add Task 💗
+    </button>
+
+
+    <h3>🔎 Filter</h3>
+
+    <div class="category-filter">
+
+      <button onclick="setFilter('all')">
+        All
+      </button>
+
+      <button onclick="setFilter('Study')">
+        📚 Study
+      </button>
+
+      <button onclick="setFilter('Personal')">
+        🌷 Personal
+      </button>
+
+      <button onclick="setFilter('Work')">
+        💼 Work
+      </button>
+
+      <button onclick="setFilter('Health')">
+        🌱 Health
+      </button>
+
+      <button onclick="setFilter('Other')">
+        ✨ Other
+      </button>
+
+    </div>
+
+
+    <div id="taskList"></div>
+
+
+    <div class="progress">
+      <div
+        class="progress-bar"
+        id="taskProgress">
+      </div>
+    </div>
+
+    <p id="progressText">
+      0% complete
+    </p>
+
+  </div>
+
+
+  <div class="card">
+
+    <h2>📝 Notes</h2>
+
+    <textarea
+      id="notes"
+      placeholder="Write your notes here..."
+    ></textarea>
+
+    <button
+      class="action"
+      onclick="saveNotes()">
+      Save Notes 💕
+    </button>
+
+  </div>
+
+
+  <div class="card">
+
+    <h2>⏰ Pomodoro</h2>
+
+    <div
+      class="timer"
+      id="timer">
+      25:00
+    </div>
+
+    <p
+      id="timerMode"
+      style="text-align:center">
+      Focus Time 🌷
+    </p>
+
+    <div style="text-align:center">
+
+      <button
+        class="action"
+        onclick="startTimer()">
+        Start
+      </button>
+
+      <button
+        class="action"
+        onclick="pauseTimer()">
+        Pause
+      </button>
+
+      <button
+        class="action"
+        onclick="resetTimer()">
+        Reset
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =======================================================
+     WEEK
+======================================================= -->
+
+<section id="week" class="page">
+
+  <div class="card">
+
+    <h2>📅 This Week</h2>
+
+    <div
+      class="week-grid"
+      id="weekGrid">
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =======================================================
+     GOALS
+======================================================= -->
+
+<section id="goals" class="page">
+
+  <div class="card">
+
+    <h2>🎯 My Goals</h2>
+
+    <input
+      id="goalInput"
+      placeholder="Add a goal..."
+      onkeydown="if(event.key==='Enter') addGoal()"
+    >
+
+    <button
+      class="action"
+      onclick="addGoal()">
+      Add Goal ✨
+    </button>
+
+    <div id="goalList"></div>
+
+  </div>
+
+
+  <div class="card">
+
+    <h2>🏆 Achievements</h2>
+
+    <div id="achievements"></div>
+
+  </div>
+
+</section>
+
+
+<!-- =======================================================
+     HABITS
+======================================================= -->
+
+<section id="habits" class="page">
+
+  <div class="card">
+
+    <h2>🌱 My Habits</h2>
+
+    <input
+      id="habitInput"
+      placeholder="Add a habit..."
+      onkeydown="if(event.key==='Enter') addHabit()"
+    >
+
+    <button
+      class="action"
+      onclick="addHabit()">
+      Add Habit 🌷
+    </button>
+
+    <div id="habitList"></div>
+
+  </div>
+
+</section>
+
+
+<!-- =======================================================
+     STATS
+======================================================= -->
+
+<section id="stats" class="page">
+
+  <div class="card">
+
+    <h2>📊 My Statistics</h2>
+
+    <div class="dashboard-grid">
+
+      <div class="dashboard-card">
+        <h3>🌷 Tasks</h3>
+        <div
+          class="big-number"
+          id="statTasks">
+          0
+        </div>
+        <p>completed</p>
+      </div>
+
+
+      <div class="dashboard-card">
+        <h3>🎯 Goals</h3>
+        <div
+          class="big-number"
+          id="statGoals">
+          0
+        </div>
+        <p>completed</p>
+      </div>
+
+
+      <div class="dashboard-card">
+        <h3>🌱 Habits</h3>
+        <div
+          class="big-number"
+          id="statHabits">
+          0
+        </div>
+        <p>completed</p>
+      </div>
+
+
+      <div class="dashboard-card">
+        <h3>⏰ Pomodoros</h3>
+        <div
+          class="big-number"
+          id="statPomodoros">
+          0
+        </div>
+        <p>completed</p>
+      </div>
+
+    </div>
+
+
+    <h3>🔥 Streak</h3>
+    <p id="statStreak">0 days</p>
+
+
+    <h3>🏆 Best Streak</h3>
+    <p id="statBestStreak">0 days</p>
+
+
+    <h3>🌷 Daily Summary</h3>
+
+    <div
+      class="vibe"
+      id="dailySummary">
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =======================================================
+     CALENDAR
+======================================================= -->
+
+<section id="calendar" class="page">
+
+  <div class="card">
+
+    <h2 id="calendarTitle">
+      🗓️ Calendar
+    </h2>
+
+    <div style="text-align:center">
+
+      <button
+        class="action"
+        onclick="changeMonth(-1)">
+        ← Previous
+      </button>
+
+      <button
+        class="action"
+        onclick="changeMonth(1)">
+        Next →
+      </button>
+
+    </div>
+
+    <br>
+
+    <div
+      class="calendar"
+      id="calendarGrid">
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =======================================================
+     CUSTOMIZE
+======================================================= -->
+
+<section id="customize" class="page">
+
+  <div class="card">
+
+    <h2>⚙️ Customize</h2>
+
+
+    <h3>🎨 Theme</h3>
+
+    <button
+      class="action"
+      onclick="setTheme('')">
+      🌸 Pink
+    </button>
+
+    <button
+      class="action"
+      onclick="setTheme('lavender')">
+      💜 Lavender
+    </button>
+
+    <button
+      class="action"
+      onclick="setTheme('darkpink')">
+      🌙 Dark Pink
+    </button>
+
+    <button
+      class="action"
+      onclick="setTheme('darklavender')">
+      🌙 Dark Lavender
+    </button>
+
+
+    <h3>🐰 Mascot</h3>
+
+    <button
+      class="action"
+      onclick="setMascot('🐰')">
+      🐰
+    </button>
+
+    <button
+      class="action"
+      onclick="setMascot('🐱')">
+      🐱
+    </button>
+
+    <button
+      class="action"
+      onclick="setMascot('🐻')">
+      🐻
+    </button>
+
+    <button
+      class="action"
+      onclick="setMascot('🐼')">
+      🐼
+    </button>
+
+    <button
+      class="action"
+      onclick="setMascot('🦊')">
+      🦊
+    </button>
+
+    <button
+      class="action"
+      onclick="setMascot('🐣')">
+      🐣
+    </button>
+
+
+    <h3>💭 Motivational Message</h3>
+
+    <textarea
+      id="customMessage"
+      placeholder="Write your own motivational message..."
+    ></textarea>
+
+    <button
+      class="action"
+      onclick="saveCustomMessage()">
+      Save Message 💗
+    </button>
+
+  </div>
+
+</section>
+
+
+<!-- =======================================================
+     TOAST
+======================================================= -->
+
+<div id="toast"></div>
+
+
+<!-- =======================================================
+     VICTORY
+======================================================= -->
+
+<div id="victory">
+
+  <div class="victory-box">
+
+    <div
+      class="mascot"
+      id="victoryMascot">
+      🐰🎀✨
+    </div>
+
+    <h1>
+      YOU DID IT! 🎉
+    </h1>
+
+    <p>
+      You completed ALL your tasks! 💗
+    </p>
+
+    <p>
+      I knew you could do it! 🌷
+    </p>
+
+    <p>
+      Time to celebrate! 🏆✨
+    </p>
+
+    <button
+      class="action"
+      onclick="closeVictory()">
+      Yayyy! 💕
+    </button>
+
+  </div>
+
+</div>
+
+
+<footer>
+  Made with 🎀, ✨ and lots of productivity 💗
+</footer>
+
+
+<script>
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+function getToday(){
+
+  const d=new Date();
+
+  return d.getFullYear()+"-"+
+    String(d.getMonth()+1).padStart(2,"0")+"-"+
+    String(d.getDate()).padStart(2,"0");
+
+}
+
+
+function showPage(id){
+
+  document.querySelectorAll(".page")
+    .forEach(p=>p.classList.remove("active"));
+
+  const page=document.getElementById(id);
+
+  if(page){
+    page.classList.add("active");
+  }
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+  if(id==="home"){
+    updateDashboard();
+  }
+
+  if(id==="stats"){
+    updateStats();
+  }
+
+  if(id==="calendar"){
+    renderCalendar();
+  }
+
+}
+
+
+/* =========================================================
+   MASCOT
+========================================================= */
+
+let mascot=
+  localStorage.getItem("plannerMascot")||"🐰";
+
+
+function updateMascots(){
+
+  document.getElementById("homeMascot")
+    .textContent=mascot;
+
+  document.getElementById("victoryMascot")
+    .textContent=mascot+"🎀✨";
+
+}
+
+
+function setMascot(m){
+
+  mascot=m;
+
+  localStorage.setItem(
+    "plannerMascot",
+    mascot
+  );
+
+  updateMascots();
+
+  toast("Mascot changed! "+mascot+" 💗");
+
+}
+
+
+/* =========================================================
+   THEME
+========================================================= */
+
+function setTheme(theme){
+
+  document.body.className=theme;
+
+  localStorage.setItem(
+    "plannerTheme",
+    theme
+  );
+
+  toast("Theme changed! ✨");
+
+}
+
+
+function loadTheme(){
+
+  document.body.className=
+    localStorage.getItem("plannerTheme")||"";
+
+}
+
+
+/* =========================================================
+   MESSAGE
+========================================================= */
+
+function saveCustomMessage(){
+
+  const message=
+    document.getElementById("customMessage").value;
+
+  localStorage.setItem(
+    "plannerCustomMessage",
+    message
+  );
+
+  updateDashboard();
+
+  toast("Message saved! 💗");
+
+}
+
+
+function loadCustomMessage(){
+
+  document.getElementById("customMessage").value=
+    localStorage.getItem("plannerCustomMessage")||"";
+
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+let toastTimeout;
+
+function toast(message){
+
+  const t=document.getElementById("toast");
+
+  t.textContent=message;
+  t.style.display="block";
+
+  clearTimeout(toastTimeout);
+
+  toastTimeout=setTimeout(()=>{
+    t.style.display="none";
+  },2200);
+
+}
+
+
+/* =========================================================
+   TASKS
+========================================================= */
+
+let tasks=
+  JSON.parse(
+    localStorage.getItem("plannerTasks")
+  )||[];
+
+let currentFilter="all";
+
+
+function setFilter(filter){
+
+  currentFilter=filter;
+
+  renderTasks();
+
+}
+
+
+function saveTasks(){
+
+  localStorage.setItem(
+    "plannerTasks",
+    JSON.stringify(tasks)
+  );
+
+  markActivity();
+
+  renderTasks();
+  updateDashboard();
+  updateStats();
+  checkVictory();
+
+}
+
+
+function addTask(){
+
+  const input=
+    document.getElementById("taskInput");
+
+  const priority=
+    document.getElementById("taskPriority").value;
+
+  const category=
+    document.getElementById("taskCategory").value;
+
+  if(!input.value.trim()){
+
+    toast("Write a task first! 🌷");
+    input.focus();
+    return;
+
+  }
+
+  tasks.push({
+
+    text:input.value.trim(),
+
+    completed:false,
+
+    priority:priority,
+
+    category:category
+
+  });
+
+  input.value="";
+
+  saveTasks();
+
+  toast("Task added! ✨");
+
+}
+
+
+/* =========================================================
+   RENDER TASKS
+========================================================= */
+
+function renderTasks(){
+
+  const list=
+    document.getElementById("taskList");
+
+  list.innerHTML="";
+
+  tasks.forEach((task,index)=>{
+
+    if(!task.priority)
+      task.priority="medium";
+
+    if(!task.category)
+      task.category="Other";
+
+    if(
+      currentFilter!=="all" &&
+      task.category!==currentFilter
+    ) return;
+
+
+    const div=
+      document.createElement("div");
+
+    div.className=
+      "task priority-"+task.priority+
+      (task.completed?" completed":"");
+
+
+    div.innerHTML=`
+
+      <input
+        type="checkbox"
+        ${task.completed?"checked":""}
+        onchange="toggleTask(${index})">
+
+      <div class="task-info">
+
+        <div class="task-name">
+          ${escapeHTML(task.text)}
+        </div>
+
+        <div class="task-meta">
+          ${priorityIcon(task.priority)}
+          ${capitalize(task.priority)}
+          &nbsp; • &nbsp;
+          🏷️ ${escapeHTML(task.category)}
+        </div>
+
+      </div>
+
+      <button
+        class="action"
+        onclick="editTask(${index})">
+        ✏️
+      </button>
+
+      <button
+        class="action"
+        onclick="moveTask(${index},-1)">
+        ⬆️
+      </button>
+
+      <button
+        class="action"
+        onclick="moveTask(${index},1)">
+        ⬇️
+      </button>
+
+      <button
+        class="action"
+        onclick="deleteTask(${index})">
+        🗑️
+      </button>
+
+    `;
+
+    list.appendChild(div);
+
+  });
+
+  updateProgress();
+
+}
+
+
+function priorityIcon(priority){
+
+  if(priority==="high") return "🔥";
+  if(priority==="medium") return "⭐";
+
+  return "🌱";
+
+}
+
+
+function capitalize(text){
+
+  return text.charAt(0).toUpperCase()+
+    text.slice(1);
+
+}
+
+
+/* =========================================================
+   EDIT TASK
+========================================================= */
+
+function editTask(index){
+
+  const newText=
+    prompt(
+      "✏️ Edit your task:",
+      tasks[index].text
+    );
+
+  if(newText===null) return;
+
+  if(!newText.trim()){
+
+    toast("Task cannot be empty! 🌷");
+    return;
+
+  }
+
+  tasks[index].text=
+    newText.trim();
+
+  saveTasks();
+
+  toast("Task updated! ✨");
+
+}
+
+
+/* =========================================================
+   MOVE TASK
+========================================================= */
+
+function moveTask(index,direction){
+
+  const newIndex=
+    index+direction;
+
+  if(
+    newIndex<0 ||
+    newIndex>=tasks.length
+  ){
+
+    toast("Can't move it that way! 🌷");
+    return;
+
+  }
+
+  const temp=tasks[index];
+
+  tasks[index]=tasks[newIndex];
+  tasks[newIndex]=temp;
+
+  saveTasks();
+
+}
+
+
+/* =========================================================
+   DELETE TASK
+========================================================= */
+
+function deleteTask(index){
+
+  if(!confirm(
+    "Delete this task? 🥺"
+  )) return;
+
+  tasks.splice(index,1);
+
+  saveTasks();
+
+  toast("Task deleted 🗑️");
+
+}
+
+
+/* =========================================================
+   COMPLETE TASK
+========================================================= */
+
+function toggleTask(index){
+
+  tasks[index].completed=
+    !tasks[index].completed;
+
+  if(tasks[index].completed){
+
+    unlockAchievement("first");
+
+    updateStreak();
+
+    toast("Task completed! 🎉");
+
+  }
+
+  saveTasks();
+
+}
+
+
+/* =========================================================
+   PROGRESS
+========================================================= */
+
+function updateProgress(){
+
+  const total=tasks.length;
+
+  const completed=
+    tasks.filter(t=>t.completed).length;
+
+  const percent=
+    total===0
+      ?0
+      :Math.round(
+        completed/total*100
+      );
+
+  document.getElementById(
+    "taskProgress"
+  ).style.width=
+    percent+"%";
+
+  document.getElementById(
+    "progressText"
+  ).textContent=
+    percent+"% complete";
+
+}
+
+
+/* =========================================================
+   SAFETY
+========================================================= */
+
+function escapeHTML(text){
+
+  return String(text)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================================================
+   NOTES
+========================================================= */
+
+function saveNotes(){
+
+  localStorage.setItem(
+    "plannerNotes",
+    document.getElementById("notes").value
+  );
+
+  toast("Notes saved! 📝💗");
+
+}
+
+
+/* =========================================================
+   WEEK
+========================================================= */
+
+const days=[
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+  "Sunday"
+];
+
+
+let weekTasks=
+  JSON.parse(
+    localStorage.getItem(
+      "plannerWeekTasks"
+    )
+  )||{};
+
+
+function renderWeek(){
+
+  const grid=
+    document.getElementById("weekGrid");
+
+  grid.innerHTML="";
+
+  days.forEach(day=>{
+
+    if(!weekTasks[day])
+      weekTasks[day]=[];
+
+    const div=
+      document.createElement("div");
+
+    div.className="week-day";
+
+    div.innerHTML=`
+
+      <h3>${day}</h3>
+
+      <input
+        id="input-${day}"
+        placeholder="Add task..."
+        onkeydown="
+          if(event.key==='Enter')
+          addWeekTask('${day}')
+        ">
+
+      <button
+        class="action"
+        onclick="addWeekTask('${day}')">
+        Add
+      </button>
+
+      <div id="tasks-${day}"></div>
+
+    `;
+
+    grid.appendChild(div);
+
+    renderWeekTasks(day);
+
+  });
+
+}
+
+
+function addWeekTask(day){
+
+  const input=
+    document.getElementById(
+      "input-"+day
+    );
+
+  if(!input.value.trim()){
+
+    toast("Write a task first! 🌷");
+    return;
+
+  }
+
+  weekTasks[day].push({
+
+    text:input.value.trim(),
+
+    completed:false
+
+  });
+
+  input.value="";
+
+  localStorage.setItem(
+    "plannerWeekTasks",
+    JSON.stringify(weekTasks)
+  );
+
+  markActivity();
+
+  renderWeek();
+
+  toast(day+" task added! 📅");
+
+}
+
+
+function renderWeekTasks(day){
+
+  const container=
+    document.getElementById(
+      "tasks-"+day
+    );
+
+  if(!container) return;
+
+  container.innerHTML="";
+
+  weekTasks[day].forEach(
+    (task,index)=>{
+
+      const div=
+        document.createElement("div");
+
+      div.className=
+        "task"+
+        (task.completed
+          ?" completed"
+          :"");
+
+      div.innerHTML=`
+
+        <input
+          type="checkbox"
+          ${task.completed?"checked":""}
+          onchange="
+            toggleWeekTask(
+              '${day}',
+              ${index}
+            )
+          ">
+
+        <span>
+          ${escapeHTML(task.text)}
+        </span>
+
+      `;
+
+      container.appendChild(div);
+
+    }
+  );
+
+}
+
+
+function toggleWeekTask(day,index){
+
+  weekTasks[day][index].completed=
+    !weekTasks[day][index].completed;
+
+  localStorage.setItem(
+    "plannerWeekTasks",
+    JSON.stringify(weekTasks)
+  );
+
+  if(weekTasks[day][index].completed){
+    markActivity();
+    toast("Weekly task complete! 🎉");
+  }
+
+  renderWeek();
+
+}
+
+
+/* =========================================================
+   GOALS
+========================================================= */
+
+let goals=
+  JSON.parse(
+    localStorage.getItem(
+      "plannerGoals"
+    )
+  )||[];
+
+
+function addGoal(){
+
+  const input=
+    document.getElementById(
+      "goalInput"
+    );
+
+  if(!input.value.trim()){
+
+    toast("Write a goal first! 🎯");
+    return;
+
+  }
+
+  goals.push({
+
+    text:input.value.trim(),
+
+    completed:false
+
+  });
+
+  input.value="";
+
+  saveGoals();
+
+  toast("Goal added! 🎯✨");
+
+}
+
+
+function saveGoals(){
+
+  localStorage.setItem(
+    "plannerGoals",
+    JSON.stringify(goals)
+  );
+
+  markActivity();
+
+  renderGoals();
+  updateDashboard();
+  updateStats();
+
+}
+
+
+function renderGoals(){
+
+  const list=
+    document.getElementById(
+      "goalList"
+    );
+
+  list.innerHTML="";
+
+  goals.forEach(
+    (goal,index)=>{
+
+      const div=
+        document.createElement("div");
+
+      div.className=
+        "task"+
+        (goal.completed
+          ?" completed"
+          :"");
+
+      div.innerHTML=`
+
+        <input
+          type="checkbox"
+          ${goal.completed?"checked":""}
+          onchange="toggleGoal(${index})">
+
+        <span>
+          ${escapeHTML(goal.text)}
+        </span>
+
+      `;
+
+      list.appendChild(div);
+
+    }
+  );
+
+}
+
+
+function toggleGoal(index){
+
+  goals[index].completed=
+    !goals[index].completed;
+
+  if(goals[index].completed){
+
+    unlockAchievement("goal");
+
+    toast("Goal achieved! 🏆");
+
+  }
+
+  saveGoals();
+
+}
+
+
+/* =========================================================
+   HABITS
+========================================================= */
+
+let habits=
+  JSON.parse(
+    localStorage.getItem(
+      "plannerHabits"
+    )
+  )||[];
+
+
+function addHabit(){
+
+  const input=
+    document.getElementById(
+      "habitInput"
+    );
+
+  if(!input.value.trim()){
+
+    toast("Write a habit first! 🌱");
+    return;
+
+  }
+
+  habits.push({
+
+    text:input.value.trim(),
+
+    completed:false
+
+  });
+
+  input.value="";
+
+  saveHabits();
+
+  toast("Habit added! 🌱✨");
+
+}
+
+
+function saveHabits(){
+
+  localStorage.setItem(
+    "plannerHabits",
+    JSON.stringify(habits)
+  );
+
+  markActivity();
+
+  renderHabits();
+  updateDashboard();
+  updateStats();
+
+}
+
+
+function renderHabits(){
+
+  const list=
+    document.getElementById(
+      "habitList"
+    );
+
+  list.innerHTML="";
+
+  habits.forEach(
+    (habit,index)=>{
+
+      const div=
+        document.createElement("div");
+
+      div.className=
+        "task"+
+        (habit.completed
+          ?" completed"
+          :"");
+
+      div.innerHTML=`
+
+        <input
+          type="checkbox"
+          ${habit.completed?"checked":""}
+          onchange="toggleHabit(${index})">
+
+        <span>
+          ${escapeHTML(habit.text)}
+        </span>
+
+      `;
+
+      list.appendChild(div);
+
+    }
+  );
+
+}
+
+
+function toggleHabit(index){
+
+  habits[index].completed=
+    !habits[index].completed;
+
+  if(
+    habits.length>0 &&
+    habits.every(
+      h=>h.completed
+    )
+  ){
+
+    unlockAchievement("habit");
+
+    toast(
+      "Habit Hero! 🌱🏆"
+    );
+
+  }
+
+  saveHabits();
+
+}
+
+
+/* =========================================================
+   STREAK
+========================================================= */
+
+let streak=
+  Number(
+    localStorage.getItem(
+      "plannerStreak"
+    )
+  )||0;
+
+
+let bestStreak=
+  Number(
+    localStorage.getItem(
+      "plannerBestStreak"
+    )
+  )||0;
+
+
+let lastDay=
+  localStorage.getItem(
+    "plannerLastDay"
+  )||"";
+
+
+function updateStreak(){
+
+  const today=getToday();
+
+  if(lastDay===today)
+    return;
+
+  if(lastDay){
+
+    const previous=
+      new Date(lastDay);
+
+    const current=
+      new Date(today);
+
+    const difference=
+      Math.round(
+        (current-previous)/
+        (1000*60*60*24)
+      );
+
+    if(difference===1)
+      streak++;
+    else
+      streak=1;
+
+  }else{
+
+    streak=1;
+
+  }
+
+  lastDay=today;
+
+  if(streak>bestStreak)
+    bestStreak=streak;
+
+  localStorage.setItem(
+    "plannerStreak",
+    streak
+  );
+
+  localStorage.setItem(
+    "plannerBestStreak",
+    bestStreak
+  );
+
+  localStorage.setItem(
+    "plannerLastDay",
+    lastDay
+  );
+
+  if(streak>=3)
+    unlockAchievement("streak");
+
+}
+
+
+/* =========================================================
+   POMODORO
+========================================================= */
+
+let focusTime=25*60;
+
+let breakTime=5*60;
+
+let timeLeft=focusTime;
+
+let timerInterval=null;
+
+let isFocus=true;
+
+let totalPomodoros=
+  Number(
+    localStorage.getItem(
+      "plannerTotalPomodoros"
+    )
+  )||0;
+
+
+function updateTimerDisplay(){
+
+  const minutes=
+    Math.floor(
+      timeLeft/60
+    );
+
+  const seconds=
+    timeLeft%60;
+
+  document.getElementById(
+    "timer"
+  ).textContent=
+    String(minutes).padStart(2,"0")+
+    ":"+
+    String(seconds).padStart(2,"0");
+
+
+  document.getElementById(
+    "timerMode"
+  ).textContent=
+    isFocus
+      ?"Focus Time 🌷"
+      :"Break Time 🌸";
+
+}
+
+
+function startTimer(){
+
+  if(timerInterval)
+    return;
+
+  timerInterval=
+    setInterval(()=>{
+
+      timeLeft--;
+
+      updateTimerDisplay();
+
+      if(timeLeft<=0){
+
+        clearInterval(
+          timerInterval
+        );
+
+        timerInterval=null;
+
+        if(isFocus){
+
+          totalPomodoros++;
+
+          localStorage.setItem(
+            "plannerTotalPomodoros",
+            totalPomodoros
+          );
+
+          unlockAchievement(
+            "pomodoro"
+          );
+
+          toast(
+            "Pomodoro complete! 🎉⏰"
+          );
+
+          isFocus=false;
+
+          timeLeft=breakTime;
+
+        }else{
+
+          isFocus=true;
+
+          timeLeft=focusTime;
+
+          toast(
+            "Break finished! Back to focus! 🌷"
+          );
+
+        }
+
+        updateTimerDisplay();
+
+        updateDashboard();
+        updateStats();
+
+      }
+
+    },1000);
+
+}
+
+
+function pauseTimer(){
+
+  clearInterval(
+    timerInterval
+  );
+
+  timerInterval=null;
+
+}
+
+
+function resetTimer(){
+
+  pauseTimer();
+
+  isFocus=true;
+
+  timeLeft=focusTime;
+
+  updateTimerDisplay();
+
+}
+
+
+/* =========================================================
+   ACHIEVEMENTS
+========================================================= */
+
+let achievements=
+  JSON.parse(
+    localStorage.getItem(
+      "myPlannerAchievements"
+    )
+  )||{};
+
+
+const achievementData={
+
+  first:[
+    "🌟",
+    "First Step",
+    "Complete your first task!"
+  ],
+
+  perfect:[
+    "💯",
+    "Perfect Day",
+    "Complete every task in one day!"
+  ],
+
+  streak:[
+    "🔥",
+    "On Fire!",
+    "Reach a 3-day streak!"
+  ],
+
+  pomodoro:[
+    "⏰",
+    "Focus Star",
+    "Finish a Pomodoro focus session!"
+  ],
+
+  habit:[
+    "🌱",
+    "Habit Hero",
+    "Complete all your habits!"
+  ],
+
+  goal:[
+    "🎯",
+    "Goal Getter",
+    "Complete a goal!"
+  ]
+
+};
+
+
+function unlockAchievement(id){
+
+  if(achievements[id])
+    return;
+
+  achievements[id]=true;
+
+  localStorage.setItem(
+    "myPlannerAchievements",
+    JSON.stringify(achievements)
+  );
+
+  renderAchievements();
+
+  toast(
+    "Achievement unlocked! "+
+    achievementData[id][0]+
+    "🏆"
+  );
+
+}
+
+
+function renderAchievements(){
+
+  const container=
+    document.getElementById(
+      "achievements"
+    );
+
+  container.innerHTML="";
+
+  Object.keys(
+    achievementData
+  ).forEach(id=>{
+
+    const a=
+      achievementData[id];
+
+    const div=
+      document.createElement("div");
+
+    div.className=
+      "achievement"+
+      (
+        achievements[id]
+          ?""
+          :" locked"
+      );
+
+    div.innerHTML=`
+
+      <strong>
+        ${a[0]} ${a[1]}
+      </strong>
+
+      <br>
+
+      ${
+        achievements[id]
+          ?"✨ Unlocked!"
+          :a[2]
+      }
+
+    `;
+
+    container.appendChild(div);
+
+  });
+
+}
+
+
+/* =========================================================
+   VICTORY
+========================================================= */
+
+let victoryShownToday=
+  localStorage.getItem(
+    "victoryDate"
+  )===getToday();
+
+
+function checkVictory(){
+
+  if(
+    tasks.length>0 &&
+    tasks.every(
+      t=>t.completed
+    ) &&
+    !victoryShownToday
+  ){
+
+    victoryShownToday=true;
+
+    localStorage.setItem(
+      "victoryDate",
+      getToday()
+    );
+
+    unlockAchievement(
+      "perfect"
+    );
+
+    showVictory();
+
+  }
+
+}
+
+
+function showVictory(){
+
+  document.getElementById(
+    "victory"
+  ).style.display="flex";
+
+  createConfetti();
+
+}
+
+
+function closeVictory(){
+
+  document.getElementById(
+    "victory"
+  ).style.display="none";
+
+}
+
+
+function createConfetti(){
+
+  const pieces=[
+    "🎀",
+    "✨",
+    "💗",
+    "🌷",
+    "⭐"
+  ];
+
+  for(let i=0;i<70;i++){
+
+    const piece=
+      document.createElement(
+        "div"
+      );
+
+    piece.className=
+      "confetti";
+
+    piece.style.left=
+      Math.random()*100+
+      "vw";
+
+    piece.style.animationDelay=
+      Math.random()*2+
+      "s";
+
+    piece.textContent=
+      pieces[
+        Math.floor(
+          Math.random()*pieces.length
+        )
+      ];
+
+    piece.style.background=
+      "transparent";
+
+    document.body.appendChild(
+      piece
+    );
+
+    setTimeout(()=>{
+      piece.remove();
+    },4000);
+
+  }
+
+}
+
+
+/* =========================================================
+   ACTIVITY
+========================================================= */
+
+function markActivity(){
+
+  localStorage.setItem(
+    "activity-"+getToday(),
+    "1"
+  );
+
+}
+
+
+/* =========================================================
+   DASHBOARD
+========================================================= */
+
+function updateDashboard(){
+
+  const total=tasks.length;
+
+  const completed=
+    tasks.filter(
+      t=>t.completed
+    ).length;
+
+  const percent=
+    total===0
+      ?0
+      :Math.round(
+        completed/total*100
+      );
+
+
+  document.getElementById(
+    "homeTaskProgress"
+  ).textContent=
+    percent+"%";
+
+
+  document.getElementById(
+    "homeProgressBar"
+  ).style.width=
+    percent+"%";
+
+
+  document.getElementById(
+    "homeTaskText"
+  ).textContent=
+    completed+
+    " / "+
+    total+
+    " tasks completed";
+
+
+  document.getElementById(
+    "homeStreak"
+  ).textContent=
+    streak;
+
+
+  document.getElementById(
+    "homeBestStreak"
+  ).textContent=
+    "Best: "+
+    bestStreak+
+    " days";
+
+
+  document.getElementById(
+    "homePomodoros"
+  ).textContent=
+    totalPomodoros;
+
+
+  document.getElementById(
+    "homeGoals"
+  ).textContent=
+    goals.filter(
+      g=>g.completed
+    ).length;
+
+
+  const custom=
+    localStorage.getItem(
+      "plannerCustomMessage"
+    );
+
+
+  if(
+    custom &&
+    custom.trim()
+  ){
+
+    document.getElementById(
+      "homeVibe"
+    ).textContent=
+      custom;
+
+    document.getElementById(
+      "dashboardMessage"
+    ).textContent=
+      custom;
+
+  }else{
+
+    let message=
+      "Let's make today amazing! ✨";
+
+    if(
+      percent===100 &&
+      total>0
+    ){
+
+      message=
+        "YOU DID IT! 🎉 You're amazing! 💗";
+
+    }else if(percent>=75){
+
+      message=
+        "You're almost there! Keep going! 🌸";
+
+    }else if(percent>=50){
+
+      message=
+        "You're halfway there! You've got this! ✨";
+
+    }else if(total>0){
+
+      message=
+        "One little step at a time! 🌷";
+
+    }
+
+
+    document.getElementById(
+      "homeVibe"
+    ).textContent=
+      message;
+
+    document.getElementById(
+      "dashboardMessage"
+    ).textContent=
+      message;
+
+  }
+
+
+  updateMascots();
+
+}
+
+
+/* =========================================================
+   STATS
+========================================================= */
+
+function updateStats(){
+
+  document.getElementById(
+    "statTasks"
+  ).textContent=
+    tasks.filter(
+      t=>t.completed
+    ).length;
+
+
+  document.getElementById(
+    "statGoals"
+  ).textContent=
+    goals.filter(
+      g=>g.completed
+    ).length;
+
+
+  document.getElementById(
+    "statHabits"
+  ).textContent=
+    habits.filter(
+      h=>h.completed
+    ).length;
+
+
+  document.getElementById(
+    "statPomodoros"
+  ).textContent=
+    totalPomodoros;
+
+
+  document.getElementById(
+    "statStreak"
+  ).textContent=
+    streak+
+    " days";
+
+
+  document.getElementById(
+    "statBestStreak"
+  ).textContent=
+    bestStreak+
+    " days";
+
+
+  const completed=
+    tasks.filter(
+      t=>t.completed
+    ).length;
+
+  const total=
+    tasks.length;
+
+
+  document.getElementById(
+    "dailySummary"
+  ).textContent=
+
+    total===0
+
+      ?"No tasks yet — let's get started! 🌷"
+
+      :completed===total
+
+        ?"Perfect day! You completed everything! 🎉"
+
+        :completed+
+          " of "+
+          total+
+          " tasks completed. Keep going! 💗";
+
+}
+
+
+/* =========================================================
+   CALENDAR
+========================================================= */
+
+let calendarDate=
+  new Date();
+
+
+function changeMonth(amount){
+
+  calendarDate.setMonth(
+    calendarDate.getMonth()+
+    amount
+  );
+
+  renderCalendar();
+
+}
+
+
+function renderCalendar(){
+
+  const grid=
+    document.getElementById(
+      "calendarGrid"
+    );
+
+  grid.innerHTML="";
+
+
+  const year=
+    calendarDate.getFullYear();
+
+  const month=
+    calendarDate.getMonth();
+
+
+  document.getElementById(
+    "calendarTitle"
+  ).textContent=
+    "🗓️ "+
+    calendarDate.toLocaleString(
+      "default",
+      {
+        month:"long"
+      }
+    )+
+    " "+
+    year;
+
+
+  [
+    "Mon",
+    "Tue",
+    "Wed",
+    "Thu",
+    "Fri",
+    "Sat",
+    "Sun"
+  ].forEach(day=>{
+
+    const div=
+      document.createElement(
+        "div"
+      );
+
+    div.innerHTML=
+      "<strong>"+
+      day+
+      "</strong>";
+
+    grid.appendChild(div);
+
+  });
+
+
+  const firstDay=
+    new Date(
+      year,
+      month,
+      1
+    ).getDay();
+
+
+  const adjustedFirst=
+    firstDay===0
+      ?6
+      :firstDay-1;
+
+
+  for(
+    let i=0;
+    i<adjustedFirst;
+    i++
+  ){
+
+    grid.appendChild(
+      document.createElement("div")
+    );
+
+  }
+
+
+  const daysInMonth=
+    new Date(
+      year,
+      month+1,
+      0
+    ).getDate();
+
+
+  for(
+    let day=1;
+    day<=daysInMonth;
+    day++
+  ){
+
+    const div=
+      document.createElement(
+        "div"
+      );
+
+    div.textContent=day;
+
+
+    const dateString=
+      year+
+      "-"+
+      String(month+1)
+        .padStart(2,"0")+
+      "-"+
+      String(day)
+        .padStart(2,"0");
+
+
+    if(
+      dateString===getToday()
+    ){
+
+      div.classList.add(
+        "today"
+      );
+
+    }
+
+
+    if(
+      localStorage.getItem(
+        "activity-"+dateString
+      )
+    ){
+
+      div.classList.add(
+        "active-day"
+      );
+
+    }
+
+
+    grid.appendChild(div);
+
+  }
+
+}
+
+
+/* =========================================================
+   LOAD EVERYTHING
+========================================================= */
+
+function loadData(){
+
+  loadTheme();
+
+  loadCustomMessage();
+
+  updateMascots();
+
+
+  const savedNotes=
+    localStorage.getItem(
+      "plannerNotes"
+    );
+
+  if(savedNotes!==null){
+
+    document.getElementById(
+      "notes"
+    ).value=
+      savedNotes;
+
+  }
+
+
+  renderTasks();
+
+  renderWeek();
+
+  renderGoals();
+
+  renderHabits();
+
+  renderAchievements();
+
+  updateTimerDisplay();
+
+  updateDashboard();
+
+  updateStats();
+
+  renderCalendar();
+
+
+  const hour=
+    new Date().getHours();
+
+
+  let greeting=
+    "Good evening! 🌙";
+
+
+  if(hour<12){
+
+    greeting=
+      "Good morning! 🌷";
+
+  }else if(hour<18){
+
+    greeting=
+      "Good afternoon! 🌸";
+
+  }
+
+
+  document.getElementById(
+    "greeting"
+  ).textContent=
+    greeting;
+
+}
+
+
+loadData();
+
+</script>
+
+</body>
+</html>
